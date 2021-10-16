@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
-const db = require('./db/connection')
 
 const startTracker = () => {
   const intro = ['Welcome to', 'Employee Tracker!'];
@@ -19,7 +18,16 @@ const startTracker = () => {
     });
 };
 
-function getDatabase() {
+async function getDatabase() {
+  const mysql = require('mysql2/promise');
+  require('dotenv').config();
+
+  const db = await mysql.createConnection({
+    host: 'localhost',
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_DB
+  });
   const getAllQuery = `
 SELECT employee.id,
       employee.first_name,
@@ -36,16 +44,17 @@ ON role.department_id = department.id
 LEFT JOIN employee manager
 ON employee.manager_id = manager.id;
   `
-  db.query(getAllQuery, function(err, res) {
-    if (err) {
-      console.log(`Something went wrond: ${err}`);
-      return;
-    }
-    console.table(res);
-  });
+  try {
+    const [rows, fields] = await db.query(getAllQuery);
+    db.end();
+    return rows;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 };
 
-// startTracker()
-//   .then(getDatabase)
-//   .then(res => console.table(res));
-getDatabase();
+startTracker()
+  .then(getDatabase)
+  .then(data => console.table(data));
+  
