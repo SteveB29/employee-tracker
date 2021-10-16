@@ -1,9 +1,14 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
 
-const startTracker = () => {
-  const intro = ['Welcome to', 'Employee Tracker!'];
+// displayes intro message using figlet
+const introMessage = () => {
+  // each item in the array will have their own title row, added blank string at the end to add a space between title and prompt
+  const intro = ['Welcome to', 'Employee Tracker!', ''];
   intro.forEach(lineString => console.log(figlet.textSync(lineString)));
+}
+
+const startTracker = () => {
   
   return inquirer
     .prompt([
@@ -54,7 +59,8 @@ ON employee.manager_id = manager.id;
   }
 };
 
+introMessage();
+
 startTracker()
   .then(getDatabase)
   .then(data => console.table(data));
-  
