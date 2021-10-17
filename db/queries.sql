@@ -1,1 +1,1 @@
-SELECT CONCAT(first_name,' ',last_name) as names, id FROM employee
+SELECT title FROM role;
