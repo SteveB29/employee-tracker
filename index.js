@@ -1,8 +1,8 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
 const queryObject = require('./utils/query-object');
-// const addQueries = require('./lib/add-queries');
-const viewEmployees = require('./lib/view-queries');
+const {addEmployee} = require('./lib/add-queries');
+const viewData = require('./lib/view-queries');
 // const updateQueries = require('./lib/update-queries');
 
 // displayes intro message using figlet
@@ -33,10 +33,20 @@ const startTracker = () => {
     ])
     .then(answer => {
       if (answer.action.slice(0,4) === 'View') {
-        return viewEmployees(answer.action);
+        return viewData(answer.action);
       } else if (answer.action.slice(0,4) === 'Add ') {
-        console.log('Add something');
-        return true;
+        if (answer.action === 'Add an Employee') {
+          return addEmployee();
+        } else if (answer.action === 'Add a Role') {
+          // addRole(answer.action);
+          return true;
+        } else if (answer.action === 'Add a Department') {
+          // addDepartment(answer.action);
+          return true;
+        } else {
+          console.log('Sorry, that answer is not part of the options, please consult you dev');
+          return false;
+        }
       } else if (answer.action.slice(0,4) === 'Upda') {
         console.log('Update something');
         return true;
