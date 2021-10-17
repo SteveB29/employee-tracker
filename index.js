@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const figlet = require('figlet');
 const queryObject = require('./utils/query-object');
 const addEmployee = require('./lib/add-queries/add-employee');
+const addDepartment = require('./lib/add-queries/add-department')
 const viewData = require('./lib/view-queries');
 // const updateQueries = require('./lib/update-queries');
 
@@ -42,7 +43,7 @@ const startTracker = () => {
           // addRole(answer.action);
           return true;
         } else if (answer.action === 'Add a Department') {
-          // addDepartment(answer.action);
+          return addDepartment();
           return true;
         } else {
           console.log('Sorry, that answer is not part of the options, please consult you dev');
