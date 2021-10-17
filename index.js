@@ -17,25 +17,31 @@ const startTracker = () => {
         type: 'list',
         name: 'action',
         choices: [
-          'View all employees',
-          'View employees by department',
-          'View employees by manager',
-          'View all roles',
-          'View all departments',
-          'Add an employee',
-          'Remove an employee',
-          'Add a role',
-          'Remove a role',
-          'Add a department',
-          'Remove a department',
+          'View all Employees',
+          'View all Departments',
+          'View all Roles',
+          'Add an Employee',
+          'Add a Role',
+          'Add a Department',
           'Update employee role',
-          'Get total utilized budget',
           'Exit application'
         ]
       }
     ])
     .then(answers => {
-      return answers;
+      if (answers.action.slice(0,4) === 'View') {
+        console.log('View something');
+        return;
+      } else if (answers.action.slice(0,4) === 'Add ') {
+        console.log('Add something');
+        return;
+      } else if (answers.action.slice(0,4) === 'Upda') {
+        console.log('Update something');
+        return;
+      } else {
+        console.log('Goodbye!');
+        return;
+      }
     });
 };
 
@@ -51,7 +57,7 @@ async function getDatabase(query) {
   });
 
   try {
-    const [rows, fields] = await db.query(queryObject[query]);
+    const [rows, fields] = await db.query(queryObject[query], '');
     db.end();
     return rows;
   } catch (err) {
@@ -63,5 +69,8 @@ async function getDatabase(query) {
 introMessage();
 
 startTracker()
-  .then(choice => getDatabase(choice.action))
-  .then(data => console.table(data));
+  .then(choice => {
+    console.log('Next Action');
+    // return getDatabase(choice.action);
+  });
+  // .then(data => console.table(data));
