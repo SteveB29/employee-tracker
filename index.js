@@ -31,13 +31,13 @@ const startTracker = () => {
         ]
       }
     ])
-    .then(answers => {
-      if (answers.action.slice(0,4) === 'View') {
-        return viewEmployees();
-      } else if (answers.action.slice(0,4) === 'Add ') {
+    .then(answer => {
+      if (answer.action.slice(0,4) === 'View') {
+        return viewEmployees(answer.action);
+      } else if (answer.action.slice(0,4) === 'Add ') {
         console.log('Add something');
         return true;
-      } else if (answers.action.slice(0,4) === 'Upda') {
+      } else if (answer.action.slice(0,4) === 'Upda') {
         console.log('Update something');
         return true;
       } else {
@@ -45,7 +45,7 @@ const startTracker = () => {
         return false;
       }
     })
-    .then((res) => {
+    .then(res => {
       if (res) {
         startTracker();
       }
@@ -73,6 +73,7 @@ async function getDatabase(query) {
     return;
   }
 };
+
 
 introMessage();
 
