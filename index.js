@@ -1,6 +1,9 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
-const queryObject = require('./utils/query-object')
+const queryObject = require('./utils/query-object');
+// const addQueries = require('./lib/add-queries');
+const viewEmployees = require('./lib/view-queries');
+// const updateQueries = require('./lib/update-queries');
 
 // displayes intro message using figlet
 const introMessage = () => {
@@ -30,18 +33,23 @@ const startTracker = () => {
     ])
     .then(answers => {
       if (answers.action.slice(0,4) === 'View') {
-        console.log('View something');
-        return;
+        return viewEmployees();
       } else if (answers.action.slice(0,4) === 'Add ') {
         console.log('Add something');
-        return;
+        return true;
       } else if (answers.action.slice(0,4) === 'Upda') {
         console.log('Update something');
-        return;
+        return true;
       } else {
         console.log('Goodbye!');
-        return;
+        return false;
       }
+    })
+    .then((res) => {
+      if (res) {
+        startTracker();
+      }
+      return;
     });
 };
 
@@ -69,8 +77,6 @@ async function getDatabase(query) {
 introMessage();
 
 startTracker()
-  .then(choice => {
-    console.log('Next Action');
-    // return getDatabase(choice.action);
+  .then(() => {
+    console.log('Thank You!');
   });
-  // .then(data => console.table(data));
