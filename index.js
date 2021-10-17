@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
+const queryObject = require('./utils/query-object')
 
 // displayes intro message using figlet
 const introMessage = () => {
@@ -13,9 +14,24 @@ const startTracker = () => {
   return inquirer
     .prompt([
       {
-        type: 'confirm',
-        name: 'name',
-        message: 'Would you like to see the database?'
+        type: 'list',
+        name: 'action',
+        choices: [
+          'View all employees',
+          'View employees by department',
+          'View employees by manager',
+          'View all roles',
+          'View all departments',
+          'Add an employee',
+          'Remove an employee',
+          'Add a role',
+          'Remove a role',
+          'Add a department',
+          'Remove a department',
+          'Update employee role',
+          'Get total utilized budget',
+          'Exit application'
+        ]
       }
     ])
     .then(answers => {
@@ -23,7 +39,7 @@ const startTracker = () => {
     });
 };
 
-async function getDatabase() {
+async function getDatabase(query) {
   const mysql = require('mysql2/promise');
   require('dotenv').config();
 
@@ -33,24 +49,9 @@ async function getDatabase() {
     password: process.env.DB_PW,
     database: process.env.DB_DB
   });
-  const getAllQuery = `
-SELECT employee.id,
-      employee.first_name,
-      employee.last_name,
-      role.title AS title,
-      department.name AS department,
-      role.salary,
-      CONCAT(manager.first_name,' ',manager.last_name) as manager
-FROM employee        
-LEFT JOIN role
-ON employee.role_id = role.id
-LEFT JOIN department
-ON role.department_id = department.id
-LEFT JOIN employee manager
-ON employee.manager_id = manager.id;
-  `
+
   try {
-    const [rows, fields] = await db.query(getAllQuery);
+    const [rows, fields] = await db.query(queryObject[query]);
     db.end();
     return rows;
   } catch (err) {
@@ -62,5 +63,5 @@ ON employee.manager_id = manager.id;
 introMessage();
 
 startTracker()
-  .then(getDatabase)
+  .then(choice => getDatabase(choice.action))
   .then(data => console.table(data));

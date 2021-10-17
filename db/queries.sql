@@ -11,4 +11,5 @@ ON employee.role_id = role.id
 LEFT JOIN department
 ON role.department_id = department.id
 LEFT JOIN employee manager
-ON employee.manager_id = manager.id;
+ON employee.manager_id = manager.id
+WHERE department.id = 1;
