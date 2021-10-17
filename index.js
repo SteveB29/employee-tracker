@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
 const queryObject = require('./utils/query-object');
-const {addEmployee} = require('./lib/add-queries');
+const addEmployee = require('./lib/add-queries/add-employee');
 const viewData = require('./lib/view-queries');
 // const updateQueries = require('./lib/update-queries');
 
@@ -19,6 +19,7 @@ const startTracker = () => {
       {
         type: 'list',
         name: 'action',
+        message: 'What would you like to do?',
         choices: [
           'View all Employees',
           'View all Departments',
