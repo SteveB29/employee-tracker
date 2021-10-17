@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
-const queryObject = require('./utils/query-object');
 const addEmployee = require('./lib/add-queries/add-employee');
 const addDepartment = require('./lib/add-queries/add-department')
 const viewData = require('./lib/view-queries');
@@ -64,28 +63,6 @@ const startTracker = () => {
       return;
     });
 };
-
-async function getDatabase(query) {
-  const mysql = require('mysql2/promise');
-  require('dotenv').config();
-
-  const db = await mysql.createConnection({
-    host: 'localhost',
-    user: process.env.DB_USER,
-    password: process.env.DB_PW,
-    database: process.env.DB_DB
-  });
-
-  try {
-    const [rows, fields] = await db.query(queryObject[query], '');
-    db.end();
-    return rows;
-  } catch (err) {
-    console.log(err);
-    return;
-  }
-};
-
 
 introMessage();
 
