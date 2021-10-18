@@ -1,1 +1,1 @@
-SELECT * FROM department;
+SELECT title FROM role;
