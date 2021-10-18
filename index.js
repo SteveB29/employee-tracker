@@ -50,6 +50,7 @@ const startTracker = () => {
       } else if (answer.action.slice(0,4) === 'Upda') {
         return updateEmployeeRole();
       } else {
+        console.log(figlet.textSync('Goodbye!'));
         return false;
       }
     })
@@ -63,7 +64,4 @@ const startTracker = () => {
 
 introMessage();
 
-startTracker()
-  .then(() => {
-    console.log(figlet.textSync('Goodbye!'));
-  });
+startTracker();
