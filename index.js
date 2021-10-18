@@ -4,7 +4,7 @@ const addEmployee = require('./lib/add-queries/add-employee');
 const addDepartment = require('./lib/add-queries/add-department');
 const addRole = require('./lib/add-queries/add-role');
 const viewData = require('./lib/view-queries');
-// const updateQueries = require('./lib/update-queries');
+const updateEmployeeRole = require('./lib/update-queries');
 
 // displayes intro message using figlet
 const introMessage = () => {
@@ -48,8 +48,7 @@ const startTracker = () => {
           return false;
         }
       } else if (answer.action.slice(0,4) === 'Upda') {
-        console.log('Update something');
-        return true;
+        return updateEmployeeRole();
       } else {
         return false;
       }
