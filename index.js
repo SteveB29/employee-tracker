@@ -4,7 +4,7 @@ const addEmployee = require('./lib/add-queries/add-employee');
 const addDepartment = require('./lib/add-queries/add-department');
 const addRole = require('./lib/add-queries/add-role');
 const viewData = require('./lib/view-queries');
-const updateEmployeeRole = require('./lib/update-queries');
+const updateEmployeeRole = require('./lib/update-role');
 
 // displayes intro message using figlet
 const introMessage = () => {
