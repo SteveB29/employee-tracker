@@ -51,7 +51,6 @@ const startTracker = () => {
         console.log('Update something');
         return true;
       } else {
-        console.log('Goodbye!');
         return false;
       }
     })
@@ -67,5 +66,5 @@ introMessage();
 
 startTracker()
   .then(() => {
-    console.log('Thank You!');
+    console.log(figlet.textSync('Goodbye!'));
   });
