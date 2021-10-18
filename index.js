@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const figlet = require('figlet');
+
 const addEmployee = require('./lib/add-queries/add-employee');
 const addDepartment = require('./lib/add-queries/add-department');
 const addRole = require('./lib/add-queries/add-role');
@@ -33,6 +34,7 @@ const startTracker = () => {
         ]
       }
     ])
+    // filters answers based on 'group' to view, add, update or exit. Calls fuction based on answer group or specific answer
     .then(answer => {
       if (answer.action.slice(0,4) === 'View') {
         return viewData(answer.action);
@@ -43,17 +45,16 @@ const startTracker = () => {
           return addRole();
         } else if (answer.action === 'Add a Department') {
           return addDepartment();
-        } else {
-          console.log('Sorry, that answer is not part of the options, please consult you dev');
-          return false;
         }
       } else if (answer.action.slice(0,4) === 'Upda') {
         return updateEmployeeRole();
       } else {
+        // if Exit is selected, displays goodbye and returns false to stop the application
         console.log(figlet.textSync('Goodbye!'));
         return false;
       }
     })
+    // if true is returned, starts prompt over again, otherwise returns out of the function
     .then(res => {
       if (res) {
         startTracker();
@@ -62,6 +63,8 @@ const startTracker = () => {
     });
 };
 
+// displays the intro method
 introMessage();
 
+// starts the program
 startTracker();
