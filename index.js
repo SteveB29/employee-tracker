@@ -40,7 +40,7 @@ const startTracker = () => {
         if (answer.action === 'Add an Employee') {
           return addEmployee();
         } else if (answer.action === 'Add a Role') {
-          return addRole;
+          return addRole();
         } else if (answer.action === 'Add a Department') {
           return addDepartment();
         } else {
